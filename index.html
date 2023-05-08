@@ -1,0 +1,652 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.9">
+    
+    
+      
+        <title>Async Exercise (Tobias Salzmann)</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-to-get-rid-of-secrets-in-kubernetes-with-workload-identity-federation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Async Exercise (Tobias Salzmann)" class="md-header__button md-logo" aria-label="Async Exercise (Tobias Salzmann)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Async Exercise (Tobias Salzmann)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How To Get Rid of Secrets in Kubernetes with Workload Identity Federation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Async Exercise (Tobias Salzmann)" class="md-nav__button md-logo" aria-label="Async Exercise (Tobias Salzmann)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Async Exercise (Tobias Salzmann)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          How To Get Rid of Secrets in Kubernetes with Workload Identity Federation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        How To Get Rid of Secrets in Kubernetes with Workload Identity Federation
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#identity-based-access-for-automated-workloads" class="md-nav__link">
+    Identity based Access for automated Workloads
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workload-identity-federation-for-kubernetes" class="md-nav__link">
+    Workload Identity Federation for Kubernetes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-if-secrets-are-unavoidable" class="md-nav__link">
+    What if secrets are unavoidable?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-if-components-can-only-work-with-long-term-credentials" class="md-nav__link">
+    What if components can only work with long-term credentials?
+  </a>
+  
+    <nav class="md-nav" aria-label="What if components can only work with long-term credentials?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#contribute-to-open-source" class="md-nav__link">
+    Contribute to open source
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sidecars-refreshers-and-proxies" class="md-nav__link">
+    Sidecars, Refreshers and Proxies
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    Key Takeaways
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-resources" class="md-nav__link">
+    Related Resources
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#identity-based-access-for-automated-workloads" class="md-nav__link">
+    Identity based Access for automated Workloads
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workload-identity-federation-for-kubernetes" class="md-nav__link">
+    Workload Identity Federation for Kubernetes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-if-secrets-are-unavoidable" class="md-nav__link">
+    What if secrets are unavoidable?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-if-components-can-only-work-with-long-term-credentials" class="md-nav__link">
+    What if components can only work with long-term credentials?
+  </a>
+  
+    <nav class="md-nav" aria-label="What if components can only work with long-term credentials?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#contribute-to-open-source" class="md-nav__link">
+    Contribute to open source
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sidecars-refreshers-and-proxies" class="md-nav__link">
+    Sidecars, Refreshers and Proxies
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    Key Takeaways
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-resources" class="md-nav__link">
+    Related Resources
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="how-to-get-rid-of-secrets-in-kubernetes-with-workload-identity-federation">How To Get Rid of Secrets in Kubernetes with Workload Identity Federation</h1>
+<p>When developing Software, we're interacting with secrets during all stages of development. 
+In our applications, in CI/CD pipelines, and sometimes even for local development, if unavoidable. 
+While we can take measures to limit the chance of leaking a secret, it is never zero. 
+Good security practises and tools such as <a href="https://github.com/Yelp/detect-secrets">detect-secrets</a> or <a href="https://github.com/thoughtworks/talisman">talisman</a> 
+can protect against some scenarios, but are not perfect. When a secret gets exposed, 
+the impact highly depends on a few of its properties:</p>
+<ul>
+<li><strong>Being shared / being shareable</strong>: Rotating shared secrets can be expensive or take time, as multiple parties might need to update it.</li>
+<li><strong>Being nonpersonalized</strong>: Access logs can be useful to investigate security issues.
+However, if it can not be determined who accessed an asset because the credentials are not tied to an identity,
+an audit trail might be harder to follow.</li>
+<li><strong>Being long-lived</strong>: In many cases, the fact that a secret has been exposed 
+will not become apparent for a long time. If it doesn't expire and doesn't get rotated often, 
+a potential attacker has a long window of opportunity to exploit the leak.</li>
+<li><strong>Being too powerful</strong>: If a secret provides access to much more data/assets than necessary, 
+a leak can be much more severe. </li>
+</ul>
+<p>An example of a terrible secret is the account key for an azure storage account.
+There are only two keys available for each account, one of which is supposed to be used at a time,
+while the other can be used for a smooth rotation.
+The credentials can not be limited in power, are not bound to an identity and do not expire,
+ticking most of the boxes in the list above.
+When one is exposed, all data on the account is available to an attacker (can be petabytes).
+While some services <a href="https://docs.fluentbit.io/manual/pipeline/outputs/azure_blob">exclusively support them</a> as an access method,
+they are actively <a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage#protect-your-access-keys:~:text=Microsoft%20recommends%20using%20Azure%20Active%20Directory%20(Azure%20AD)%20to%20authorize%20requests%20against%20blob%2C%20queue%2C%20and%20table%20data%20if%20possible%2C%20rather%20than%20using%20the%20account%20keys%20(Shared%20Key%20authorization)">discouraged by Microsoft</a>.
+Microsoft instead recommends using role assignments and other identity based authentication options.</p>
+<h2 id="identity-based-access-for-automated-workloads">Identity based Access for automated Workloads</h2>
+<p>Classically, to enable identity based access for kubernetes workloads, such as application pods or jobs, 
+an identity is created as a cloud resource.
+Examples of such identities are Azure Service Principals or GCP Service Accounts.
+Then, a secret is generated and stored where the identity is used. In Kubernetes, it is usually stored in a Kubernetes Secret, 
+and injected into the workload.
+Together with solid security practices within Kubernetes, like the use of Kubernetes <a href="https://kubernetes.io/docs/concepts/security/rbac-good-practices/">RBAC (Role based Access Control)</a> and namespace isolation, 
+this is already a step up from using anonymous credentials. However, these secrets are usually still quite long-lived and need to be rotated (and therefore moved) regularly.
+Luckily, there is a way to completely get rid of those secrets for good and instead only rely on short-lived tokens
+for many common scenarios.</p>
+<h2 id="workload-identity-federation-for-kubernetes">Workload Identity Federation for Kubernetes</h2>
+<p>On a high level, workload identity federation allows the identity provider in the cloud (the one issuing tokens for GCP service accounts)
+to trust the identity provider in kubernetes (the one issuing tokens for kubernetes service accounts), 
+so that an application running in a kubernetes pod can exchange a token for it's service account for a token
+for the service account in the cloud.</p>
+<p><img alt="" src="diagram.drawio.png" /></p>
+<p>Here's some example terraform code to create a cloud identity (user assigned identity on azure, service account on GCP)
+along with the association to a kubernetes service account, identified by the namespace and service account name.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Azure</label><label for="__tabbed_1_2">GCP</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_user_assigned_identity&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;west-europe&quot;</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;some-cloud-identity-name&gt;&quot;</span>
+<span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;resource-group-name&gt;&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_federated_identity_credential&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;example&quot;</span>
+<span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;resource-group-name&gt;&quot;</span>
+<span class="w">  </span><span class="na">audience</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;api://AzureADTokenExchange&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="na">issuer</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://oidc.prod-aks.azure.com/&lt;cluster-issuer-id&gt;/&quot;</span>
+<span class="w">  </span><span class="na">parent_id</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_user_assigned_identity.example.id</span>
+<span class="w">  </span><span class="na">subject</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;system:serviceaccount:&lt;namespace-name&gt;:&lt;service-account-name&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;google_service_account&quot;</span><span class="w"> </span><span class="nv">&quot;example&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">account_id</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;some-cloud-identity-name&gt;&quot;</span>
+<span class="w">  </span><span class="na">display_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;My GCP cloud identity&quot;</span>
+<span class="w">  </span><span class="na">project</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nv">var.project_id</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;google_service_account_iam_member&quot;</span><span class="w"> </span><span class="nv">&quot;main&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">service_account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">google_service_account.example.account_id</span>
+<span class="w">  </span><span class="na">role</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;roles/iam.workloadIdentityUser&quot;</span>
+<span class="w">  </span><span class="na">member</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;serviceAccount:${var.project_id}.svc.id.goog[&lt;namespace-name&gt;/&lt;service-account-name&gt;]&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note that this configuration does not reference the name of the GKE cluster, and will equally apply to <a href="https://cloud.google.com/kubernetes-engine/docs/concepts/workload-identity#identity_sameness">all GKE clusters in a project</a>.
+An attacker could take advantage of this if one cluster is not protected sufficiently (for example when exploring or migrating).</p>
+</div>
+</div>
+</div>
+</div>
+<p>On kubernetes side, a pod using workload identity can be configured as usual, with a few additions:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Azure</label><label for="__tabbed_2_2">GCP</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="hll"><span class="w">    </span><span class="nt">azure.workload.identity/client-id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;client-id-of-azure-identity&gt;</span>
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;service-account-name&gt;</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;namespace&gt;</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;some-pod-name&gt;</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;namespace&gt;</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="hll"><span class="w">    </span><span class="nt">azure.workload.identity/use</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+</span><span class="nt">spec</span><span class="p">:</span>
+<span class="hll"><span class="w">  </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;service-account-name&gt;</span>
+</span><span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="hll"><span class="w">    </span><span class="nt">iam.gke.io/gcp-service-account</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;cloud-identity-name&gt;@&lt;project-id&gt;.iam.gserviceaccount.com</span>
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;service-account-name&gt;</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;namespace&gt;</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;some-pod-name&gt;</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;namespace&gt;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="hll"><span class="w">  </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;service-account-name&gt;</span>
+</span><span class="w">  </span><span class="nt">nodeSelector</span><span class="p">:</span>
+<span class="hll"><span class="w">    </span><span class="nt">iam.gke.io/gke-metadata-server-enabled</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="c1">#Needed if workload identity is not enabled on all nodepools</span>
+</span><span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>If these resources are deployed to a cluster that has workload identity enabled, 
+additional environment variables and a volume containing a token will be injected into the pod.</p>
+<p>At this point, using workload identities becomes very straightforward if the client libraries provided by 
+the cloud providers already support it. Here is a few examples accessing cloud resources:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Azure Key Vault</label><label for="__tabbed_3_2">GCP Secret Manager</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.keyvault.secrets</span> <span class="kn">import</span> <span class="n">SecretClient</span>
+<span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">credential</span> <span class="o">=</span> <span class="n">DefaultAzureCredential</span><span class="p">()</span>
+    <span class="n">keyvault_client</span> <span class="o">=</span> <span class="n">SecretClient</span><span class="p">(</span><span class="n">vault_url</span><span class="o">=</span><span class="s2">&quot;&lt;some-keyvault-url&gt;&quot;</span><span class="p">,</span> <span class="n">credential</span><span class="o">=</span><span class="n">credential</span><span class="p">)</span>
+    <span class="n">secret</span> <span class="o">=</span> <span class="n">keyvault_client</span><span class="o">.</span><span class="n">get_secret</span><span class="p">(</span><span class="s2">&quot;&lt;some-secret-name&gt;&quot;</span><span class="p">)</span>
+    <span class="n">do_something_with_secret</span><span class="p">(</span><span class="n">secret</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">secretmanager</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">secretmanager</span><span class="o">.</span><span class="n">SecretManagerServiceClient</span><span class="p">()</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;projects/&lt;project_id&gt;/secrets/&lt;secret_id&gt;/versions/latest&quot;</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">access_secret_version</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">})</span>
+    <span class="n">secret_value</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+    <span class="n">do_something_with_secret</span><span class="p">(</span><span class="n">secret_value</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>As visible, both Azure and GCP provide good support to hide the complexity that comes with workload identity.</p>
+<h2 id="what-if-secrets-are-unavoidable">What if secrets are unavoidable?</h2>
+<p>While it is relatively easy to access resources in the own cloud provider using workload identities, external
+dependencies often don't offer the possibility. For example, a monitoring platform like <a href="https://www.datadoghq.com/">Datadog</a>
+might only offer authentication using api keys. 
+Even in this case, workload identities offer some advantages in conjunction with cloud secret stores.
+Like in the previous code example, an external secret can be stored in a secret manager and accessed from the
+pod directly, circumventing the need to create kubernetes secrets from a pipeline and injecting it into the pod via environment variables.</p>
+<p>If the component needing access to the secret is not a custom application, there are <a href="https://secrets-store-csi-driver.sigs.k8s.io/introduction.html">CSI Drivers</a> available to sync
+secrets from secrets stores into kubernetes (as mounted volumes or additionally as kubernetes secrets).
+However, there are <a href="https://secrets-store-csi-driver.sigs.k8s.io/topics/best-practices.html">security tradeoffs</a> when compared with direct integration via an API.</p>
+<h2 id="what-if-components-can-only-work-with-long-term-credentials">What if components can only work with long-term credentials?</h2>
+<p>Sometimes, when deploying generic components without custom code, it is not straightforward to work with tokens
+instead of long-lived secrets. For example, a service like <a href="https://backstage.io/docs/getting-started/configuration#install-and-configure-postgresql">Backstage</a>
+might depend on a Postgres database as a backend. While postgres in Azure and GCP both support identity based auth,
+the tool in question might only allow configuration of a fixed username/password.
+Here are a few approaches how to approach this issue:</p>
+<h3 id="contribute-to-open-source">Contribute to open source</h3>
+<p>Sometimes, it is easiest to raise a pull-request with an open source project,
+than to find workarounds to address limited support.
+That could mean adding the ability to configure a function instead of a static configuration value to fetch a password,
+enabling a backend to function with default credentials for major cloud providers or just adding a missing setting to
+a helm chart.
+This has the added benefit of contributing to the community and also saves maintenance efforts for custom adaptions.
+In many cases, it can also be enough to check and vote for an existing issue or to raise a new one,
+if a direct contribution is unrealistic.</p>
+<h3 id="sidecars-refreshers-and-proxies">Sidecars, Refreshers and Proxies</h3>
+<p>It is often possible to add sidecars to containers that update credentials. 
+In the case of postgres, they could fetch a credential in regular intervals and share it with the other container via a shared volume.
+Whether this works or not might still depend, as not every component will react to changes at runtime.
+A more drastic option is a component that forces a pod recreation whenever a secret expires or is about to expire.
+If the kubernetes resources are configured appropriately, that would not have any impact on availability.
+Another option is to put a proxy between the application and the external dependency it is trying to access.
+For Google Cloud SQL, there is <a href="https://cloud.google.com/sql/docs/postgres/sql-proxy#cloud-sql-auth-proxy-docker-image">an option available</a> 
+that can be deployed within a namespace or as a sidecar.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Something to keep in mind when considering these options is whether the benefits for security
+actually outweigh the additional architectural complexity. 
+<a href="https://martinfowler.com/articles/agile-threat-modelling.html">Thread Modelling</a> can help with prioritisation.</p>
+</div>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li>Secrets are omnipresent and important in software, but can pose a risk if they are weak, long-lived, powerful or shared or not identity-based</li>
+<li>Everytime a secret is moved between places, there is a risk of exposing it, so movement should be minimized</li>
+<li>Workload Identity Federation, along with fine-grained permissions, is a powerful way to eliminate persistent secrets</li>
+</ul>
+<h2 id="related-resources">Related Resources</h2>
+<p><a href="https://azure.github.io/azure-workload-identity/docs/">Azure Workload Identity</a></p>
+<p><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity">GKE Workload Identity</a></p>
+<p><a href="https://github.com/aws/amazon-eks-pod-identity-webhook">AWS Pod Identity</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.fac441b0.min.js"></script>
+      
+    
+  </body>
+</html>
