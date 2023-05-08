@@ -1,0 +1,10 @@
+site_name: Async Exercise (Tobias Salzmann)
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+theme:
+  name: material
